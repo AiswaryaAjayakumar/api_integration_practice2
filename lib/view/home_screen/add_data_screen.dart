@@ -35,7 +35,8 @@ class _AddDataScreenState extends State<AddDataScreen> {
             ElevatedButton(
                 onPressed: () {
                   addingData();
-                  setState(() {});
+
+                  Navigator.pop(context);
                 },
                 child: Text("Add Data"))
           ],
@@ -46,5 +47,6 @@ class _AddDataScreenState extends State<AddDataScreen> {
 
   addingData() async {
     await Provider.of<HomeScreenController>(context, listen: false).addData();
+   
   }
 }
