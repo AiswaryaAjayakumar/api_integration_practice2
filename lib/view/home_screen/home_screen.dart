@@ -39,47 +39,51 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final homeScreenState = Provider.of<HomeScreenController>(context);
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 500,
-            child: ListView.builder(
-              padding: EdgeInsets.all(20),
-              shrinkWrap: true,
-              // physics: NeverScrollableScrollPhysics(),
-              itemCount: homeScreenState.apiRes?.data?.length,
-              itemBuilder: (context, index) => Center(
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(homeScreenState.apiRes?.data?[index].name ?? ""),
-                      Spacer(),
-                      IconButton(
-                          onPressed: () {
-                            deletingData(
-                                homeScreenState.apiRes?.data?[index].id ?? -1);
-                            setState(() {});
-                          },
-                          icon: Icon(Icons.delete)),
-                    ],
-                  ),
-                ],
-              )),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.sizeOf(context).height,
+              width: MediaQuery.sizeOf(context).width,
+              child: ListView.builder(
+                padding: EdgeInsets.all(20),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: homeScreenState.apiRes?.data?.length,
+                itemBuilder: (context, index) => Center(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(homeScreenState.apiRes?.data?[index].name ?? ""),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              deletingData(
+                                  homeScreenState.apiRes?.data?[index].id ??
+                                      -1);
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.delete)),
+                      ],
+                    ),
+                  ],
+                )),
+              ),
             ),
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddDataScreen(),
-                    ));
-                // await fetchingData();
-              },
-              child: Text("Add Data"))
-        ],
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddDataScreen(),
+                      ));
+                  await fetchingData();
+                },
+                child: Text("Add Data"))
+          ],
+        ),
       ),
     );
   }
