@@ -8,15 +8,21 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(Myapp());
 }
+
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => HomeScreenController(),)],
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => HomeScreenController(),
+        )
+      ],
       child: MaterialApp(
-        home: HomeScreen() ,
+        debugShowCheckedModeBanner: false,
+        home: HomeScreen(),
       ),
     );
   }

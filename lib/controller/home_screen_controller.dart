@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomeScreenController with ChangeNotifier {
+ static TextEditingController c1 = TextEditingController();
+ static TextEditingController c2 = TextEditingController();
+
   SampleApiRes? apiRes;
 
   Future<void> fetchData() async {
@@ -37,6 +40,19 @@ class HomeScreenController with ChangeNotifier {
       notifyListeners();
     } else {
       print("Delete Failed");
+    }
+  }
+
+  addData() async {
+    final url = Uri.parse("http://3.93.46.140/employees/create/");
+    var responseAdd =
+        await http.post(body: {"name": c1.text, "role": c2.text}, url);
+    if (responseAdd.statusCode == 200) {
+      var decodeData = jsonDecode(responseAdd.body);
+      apiRes = SampleApiRes.fromJson(decodeData);
+      notifyListeners();
+    } else {
+      print("Data added successfully...");
     }
   }
 }
